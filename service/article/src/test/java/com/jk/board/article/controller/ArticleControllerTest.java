@@ -1,11 +1,14 @@
 package com.jk.board.article.controller;
 
+import com.jk.board.article.service.response.ArticlePageResponse;
 import com.jk.board.article.service.response.ArticleResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
 
+@Slf4j
 class ArticleControllerTest {
 
     RestClient restClient = RestClient.create("http://localhost:8080");
@@ -55,6 +58,19 @@ class ArticleControllerTest {
         restClient.delete()
                 .uri("/v1/articles/{articleId}", 234105273186234368L)
                 .retrieve();
+    }
+
+    @Test
+    void readAllTest() {
+        var response = restClient.get()
+                .uri("/v1/articles?boardId=1&pageSize=30&page=50000")
+                .retrieve()
+                .body(ArticlePageResponse.class);
+
+        log.info("response.getArticleCount() = {}", response.getArticleCount());
+        for (var article : response.getArticles()) {
+            log.info("articleId = {}", article.getArticleId());
+        }
     }
 
 
