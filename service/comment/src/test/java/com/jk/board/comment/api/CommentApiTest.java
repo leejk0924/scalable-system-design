@@ -27,7 +27,7 @@ public class CommentApiTest {
 
     CommentResponse createComment(CommentCreateRequest request) {
         return restClient.post()
-                .uri("/v1/comments")
+                .uri("/v2/comments")
                 .body(request)
                 .retrieve()
                 .body(CommentResponse.class);
@@ -37,7 +37,7 @@ public class CommentApiTest {
     void read() throws Exception {
         // Given
         CommentResponse response = restClient.get()
-                .uri("/v1/comments/{commentId}", 237466238926086144L)
+                .uri("/v2/comments/{commentId}", 237466238926086144L)
                 .retrieve()
                 .body(CommentResponse.class);
         System.out.println("response = " + response);
@@ -46,14 +46,14 @@ public class CommentApiTest {
     @Test
     void delete() throws Exception {
         restClient.delete()
-                .uri("/v1/comments/{commentId}", 237466239165161472L)
+                .uri("/v2/comments/{commentId}", 237466239165161472L)
                 .retrieve();
     }
 
     @Test
     void readAll() throws Exception {
         CommentPageResponse response = restClient.get()
-                .uri("/v1/comments?articleId=1&page=1&pageSize=10")
+                .uri("/v2/comments?articleId=1&page=1&pageSize=10")
                 .retrieve()
                 .body(CommentPageResponse.class);
 
@@ -83,7 +83,7 @@ public class CommentApiTest {
     @Test
     void readAllInfiniteScroll() throws Exception {
         List<CommentResponse> response1 = restClient.get()
-                .uri("/v1/comments/infinite-scroll?articleId=1&pageSize=5")
+                .uri("/v2/comments/infinite-scroll?articleId=1&pageSize=5")
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<CommentResponse>>() {
                 });

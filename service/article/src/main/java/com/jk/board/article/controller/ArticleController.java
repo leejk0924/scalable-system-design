@@ -15,12 +15,12 @@ import java.util.List;
 public class ArticleController {
     private final ArticleService articleService;
 
-    @GetMapping("/v1/articles/{articleId}")
+    @GetMapping("/v2/articles/{articleId}")
     public ArticleResponse read(@PathVariable Long articleId) {
         return articleService.read(articleId);
     }
 
-    @GetMapping("/v1/articles")
+    @GetMapping("/v2/articles")
     public ArticlePageResponse readAll(
             @RequestParam("boardId") Long boardId,
             @RequestParam("page") Long page,
@@ -29,7 +29,7 @@ public class ArticleController {
         return articleService.readAll(boardId, page, pageSize);
     }
 
-    @GetMapping("/v1/articles/infinite-scroll")
+    @GetMapping("/v2/articles/infinite-scroll")
     public List<ArticleResponse> readAllInfiniteScroll(
             @RequestParam("boardId") Long boardId,
             @RequestParam("pageSize") Long pageSize,
@@ -38,17 +38,17 @@ public class ArticleController {
         return articleService.readAllInfiniteScroll(boardId, pageSize, lastArticleId);
     }
 
-    @PostMapping("/v1/articles")
+    @PostMapping("/v2/articles")
     public ArticleResponse create(@RequestBody ArticleCreateRequest request) {
         return articleService.create(request);
     }
 
-    @PutMapping("/v1/articles/{articleId}")
+    @PutMapping("/v2/articles/{articleId}")
     public ArticleResponse update(@PathVariable Long articleId, @RequestBody ArticleUpdateRequest request) {
         return articleService.update(articleId, request);
     }
 
-    @DeleteMapping("/v1/article/{articleId}")
+    @DeleteMapping("/v2/article/{articleId}")
     public void delete(@PathVariable Long articleId) {
         articleService.delete(articleId);
     }

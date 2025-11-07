@@ -24,7 +24,7 @@ class ArticleControllerTest {
 
     ArticleResponse create(ArticleCreateRequest request) {
         return restClient.post()
-                .uri("/v1/articles")
+                .uri("/v2/articles")
                 .body(request)
                 .retrieve()
                 .body(ArticleResponse.class);
@@ -37,7 +37,7 @@ class ArticleControllerTest {
     }
     ArticleResponse read(Long articleId) {
         return restClient.get()
-                .uri("/v1/articles/{articleId}", articleId)
+                .uri("/v2/articles/{articleId}", articleId)
                 .retrieve()
                 .body(ArticleResponse.class);
     }
@@ -50,7 +50,7 @@ class ArticleControllerTest {
     }
     void update(Long articleId) {
         restClient.put()
-                .uri("/v1/articles/{articleId}", articleId)
+                .uri("/v2/articles/{articleId}", articleId)
                 .body(new ArticleUpdateRequest("test1", "test2"))
                 .retrieve();
     }
@@ -59,14 +59,14 @@ class ArticleControllerTest {
     @Test
     void deleteTest() {
         restClient.delete()
-                .uri("/v1/articles/{articleId}", 234105273186234368L)
+                .uri("/v2/articles/{articleId}", 234105273186234368L)
                 .retrieve();
     }
 
     @Test
     void readAllTest() {
         var response = restClient.get()
-                .uri("/v1/articles?boardId=1&pageSize=30&page=50000")
+                .uri("/v2/articles?boardId=1&pageSize=30&page=50000")
                 .retrieve()
                 .body(ArticlePageResponse.class);
 
@@ -79,7 +79,7 @@ class ArticleControllerTest {
     @Test
     void readAllInfiniteScrollTest() throws Exception {
         List<ArticleResponse> articles1 = restClient.get()
-                .uri("/v1/articles/infinite-scroll?boardId=1&pageSize=5")
+                .uri("/v2/articles/infinite-scroll?boardId=1&pageSize=5")
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<ArticleResponse>>() {
                 });
